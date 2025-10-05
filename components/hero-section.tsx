@@ -43,11 +43,20 @@ export function HeroSection() {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          {/* Animated badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm animate-fade-in-up opacity-0 [animation-delay:0.1s] [animation-fill-mode:forwards]">
-            <Sparkles className="w-4 h-4 text-foreground animate-pulse" />
-            <span className="text-sm font-medium">Transforming Ideas into Reality</span>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 ">
+            {/* <Sparkles className="w-4 h-4 text-foreground animate-pulse" />
+            <span className="text-sm font-medium mt-2.5">Transforming Ideas into Reality</span> */}
           </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 ">
+            {/* <Sparkles className="w-4 h-4 text-foreground animate-pulse" />
+            <span className="text-sm font-medium mt-2.5">Transforming Ideas into Reality</span> */}
+          </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 ">
+            {/* <Sparkles className="w-4 h-4 text-foreground animate-pulse" />
+            <span className="text-sm font-medium mt-2.5">Transforming Ideas into Reality</span> */}
+          </div>
+         
 
           {/* Main heading with staggered animation */}
           <div className="space-y-4">
@@ -76,6 +85,12 @@ export function HeroSection() {
             We are solving problems through software. From concept to deployment, we build scalable solutions that drive
             real business results.
           </p>
+
+           {/* Animated badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm animate-fade-in-up opacity-0 [animation-delay:0.1s] [animation-fill-mode:forwards]">
+            <Sparkles className="w-4 h-4 text-foreground animate-pulse" />
+            <span className="text-sm font-medium">Transforming Ideas into Reality</span>
+          </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 animate-fade-in-up opacity-0 [animation-delay:0.6s] [animation-fill-mode:forwards]">
             <Button
@@ -118,11 +133,11 @@ export function HeroSection() {
       </div>
 
       {/* Scroll indicator with enhanced animation */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-0 animate-fade-in [animation-delay:1s] [animation-fill-mode:forwards]">
+      {/* <div className="absolute mt-2.5 bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-0 animate-fade-in [animation-delay:1s] [animation-fill-mode:forwards]">
         <div className="w-6 h-10 border-2 border-foreground rounded-full flex items-start justify-center p-2">
           <div className="w-1 h-2 bg-foreground rounded-full animate-scroll-indicator"></div>
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }
