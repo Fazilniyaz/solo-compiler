@@ -1,32 +1,32 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { User, Award, Target } from "lucide-react"
+import { Clock, Award, Zap } from "lucide-react"
 
-const founders = [
+const features = [
   {
-    name: "Asif",
-    experience: "3 years of IT experience",
-    specialty: "Strong client network and business development",
+    name: "On-Time Delivery",
+    experience: "Never miss a deadline",
+    specialty: "Precision in project timelines",
     description:
-      "Expert in building and maintaining client relationships, with extensive experience in IT consulting and project management.",
+      "We understand the importance of time in business. Our streamlined processes and agile methodology ensure your projects are delivered exactly when promised, every time.",
+    icon: Clock,
+  },
+  {
+    name: "Quality Matters",
+    experience: "Excellence in every pixel",
+    specialty: "Uncompromising quality standards",
+    description:
+      "From code architecture to user experience, we maintain the highest quality standards. Every line of code and design element is crafted with precision and attention to detail.",
     icon: Award,
   },
   {
-    name: "Fazil",
-    experience: "2 years of experience",
-    specialty: "AI-integrated full-stack development",
+    name: "Cutting-Edge Solutions",
+    experience: "Future-proof technology",
+    specialty: "AI-powered modern development",
     description:
-      "Specializes in cutting-edge AI integration and modern full-stack development using MERN stack and latest technologies.",
-    icon: Target,
-  },
-  {
-    name: "Ashik",
-    experience: "Expert in design & management",
-    specialty: "Documentation, Figma & logo design",
-    description:
-      "Master of visual design and documentation, creating stunning logos and comprehensive project documentation.",
-    icon: User,
+      "We leverage the latest technologies including AI integration, modern frameworks, and best practices to build scalable, maintainable, and innovative solutions.",
+    icon: Zap,
   },
 ]
 
@@ -40,18 +40,18 @@ export function AboutSection() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="text-center space-y-4 animate-fade-in-up">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight">Who We Are</h2>
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tight">Why Choose Us</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              A team of passionate developers and designers committed to delivering exceptional software solutions.
+              We deliver exceptional value through reliable timelines, uncompromising quality, and innovative technology solutions.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {founders.map((founder, index) => {
-              const Icon = founder.icon
+            {features.map((feature, index) => {
+              const Icon = feature.icon
               return (
                 <Card
-                  key={founder.name}
+                  key={feature.name}
                   className="bg-card border-border hover:border-foreground transition-all duration-500 group relative overflow-hidden hover:shadow-2xl hover:-translate-y-2"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
@@ -64,13 +64,13 @@ export function AboutSection() {
                     </div>
 
                     <div>
-                      <h3 className="text-2xl font-bold mb-1">{founder.name}</h3>
-                      <p className="text-sm text-muted-foreground">{founder.experience}</p>
+                      <h3 className="text-2xl font-bold mb-1">{feature.name}</h3>
+                      <p className="text-sm text-muted-foreground">{feature.experience}</p>
                     </div>
 
                     <div className="space-y-2">
-                      <p className="font-semibold text-sm">{founder.specialty}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{founder.description}</p>
+                      <p className="font-semibold text-sm">{feature.specialty}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                     </div>
                   </CardContent>
 
