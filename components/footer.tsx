@@ -52,14 +52,14 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 group">
                 <Mail className="w-4 h-4 text-foreground group-hover:scale-110 transition-transform" />
-                <a href="mailto:contact@solocompiler.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-medium">
-                  contact@solocompiler.com
+                <a href="mailto:solocompilers@gmail.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-medium">
+                  solocompilers@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-3 group">
                 <Phone className="w-4 h-4 text-foreground group-hover:scale-110 transition-transform" />
                 <a href="tel:+1234567890" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-medium">
-                  +1 (234) 567-890
+                  +91 9952364055
                 </a>
               </div>
               <div className="flex items-center gap-3 group">

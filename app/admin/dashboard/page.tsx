@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [clients, setClients] = useState([])
   const [employees, setEmployees] = useState([])
   const [managers, setManagers] = useState([])
+  const [messages, setMessages] = useState([])
   const [showClientForm, setShowClientForm] = useState(false)
   const [editingClient, setEditingClient] = useState(null)
   const [showEmployeeForm, setShowEmployeeForm] = useState(false)
@@ -37,6 +38,13 @@ export default function AdminDashboard() {
     { key: "salary", label: "Salary" },
     { key: "from", label: "From", type: "date" },
     { key: "to", label: "To", type: "date" },
+  ]
+
+  const messageColumns = [
+    { key: "email", label: "Email" },
+    { key: "phone_number", label: "Phone Number" },
+    { key: "message", label: "Message" },
+    { key: "createdAt", label: "Submitted On", type: "date" },
   ]
 
   useEffect(() => {
@@ -70,6 +78,7 @@ export default function AdminDashboard() {
       fetchClients()
       fetchEmployees()
       fetchManagers()
+      fetchMessages()
     }
   }, [authenticated])
 
@@ -103,6 +112,17 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("[v0] Error fetching managers:", error)
       setManagers([])
+    }
+  }
+
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch("/api/messages")
+      const data = await res.json()
+      setMessages(data.success ? data.data : [])
+    } catch (error) {
+      console.error("[v0] Error fetching messages:", error)
+      setMessages([])
     }
   }
 
@@ -200,6 +220,17 @@ export default function AdminDashboard() {
     }
   }
 
+  const handleDeleteMessage = async (messageId) => {
+    if (confirm("Are you sure you want to delete this message?")) {
+      try {
+        await fetch(`/api/messages/${messageId}`, { method: "DELETE" })
+        fetchMessages()
+      } catch (error) {
+        console.error("[v0] Error deleting message:", error)
+      }
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
@@ -218,10 +249,14 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-            <p className="text-gray-400">Manage clients, employees, and managers</p>
+            <p className="text-gray-400">Manage clients, employees, managers, and contact messages</p>
           </div>
           <div className="flex gap-4">
-            <Button variant="outline" onClick={() => router.push("/")}>
+            <Button
+              variant="outline"
+              className="bg-white text-black border-zinc-200 hover:bg-zinc-100"
+              onClick={() => router.push("/")}
+            >
               Back to Home
             </Button>
             <Button variant="destructive" onClick={handleLogout}>
@@ -232,10 +267,31 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="clients" className="space-y-6">
-          <TabsList className="bg-gray-900">
-            <TabsTrigger value="clients">Clients</TabsTrigger>
-            <TabsTrigger value="employees">Employees</TabsTrigger>
-            <TabsTrigger value="managers">Managers</TabsTrigger>
+          <TabsList className="bg-zinc-900 border border-zinc-700 h-12 p-1">
+            <TabsTrigger
+              value="clients"
+              className="px-4 text-zinc-300 hover:text-white data-[state=active]:bg-white data-[state=active]:text-black"
+            >
+              Clients
+            </TabsTrigger>
+            <TabsTrigger
+              value="employees"
+              className="px-4 text-zinc-300 hover:text-white data-[state=active]:bg-white data-[state=active]:text-black"
+            >
+              Employees
+            </TabsTrigger>
+            <TabsTrigger
+              value="managers"
+              className="px-4 text-zinc-300 hover:text-white data-[state=active]:bg-white data-[state=active]:text-black"
+            >
+              Managers
+            </TabsTrigger>
+            <TabsTrigger
+              value="messages"
+              className="px-4 text-zinc-300 hover:text-white data-[state=active]:bg-white data-[state=active]:text-black"
+            >
+              Messages
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="clients" className="space-y-6">
@@ -349,6 +405,14 @@ export default function AdminDashboard() {
               }}
               onDelete={handleDeleteManager}
             />
+          </TabsContent>
+
+          <TabsContent value="messages" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold">Contact Messages</h2>
+            </div>
+
+            <DataTable data={messages} columns={messageColumns} onDelete={handleDeleteMessage} />
           </TabsContent>
         </Tabs>
       </div>

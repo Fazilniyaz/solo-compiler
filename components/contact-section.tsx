@@ -12,9 +12,8 @@ import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
-    subject: "",
+    phone_number: "",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -49,9 +48,18 @@ export function ContactSection() {
     setSubmitStatus("idle")
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const response = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to save message")
+      }
+
       setSubmitStatus("success")
-      setFormData({ name: "", email: "", subject: "", message: "" })
+      setFormData({ email: "", phone_number: "", message: "" })
     } catch (error) {
       setSubmitStatus("error")
     } finally {
@@ -123,10 +131,10 @@ export function ContactSection() {
                     <div className="pt-2">
                       <p className="font-bold text-sm uppercase tracking-wide text-muted-foreground mb-1">Email</p>
                       <a
-                        href="mailto:contact@solocompiler.com"
+                        href="mailto:solocompilers@gmail.com"
                         className="text-lg font-semibold text-foreground hover:underline underline-offset-4 decoration-2"
                       >
-                        contact@solocompiler.com
+                        solocompilers@gmail.com
                       </a>
                     </div>
                   </div>
@@ -145,7 +153,7 @@ export function ContactSection() {
                         href="tel:+1234567890"
                         className="text-lg font-semibold text-foreground hover:underline underline-offset-4 decoration-2"
                       >
-                        +1 (234) 567-890
+                        +91 9952364055
                       </a>
                     </div>
                   </div>
@@ -205,19 +213,7 @@ export function ContactSection() {
               className={`bg-background border-2 border-foreground/10 hover:border-foreground/30 transition-all duration-700 hover:shadow-2xl delay-400 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
             >
               <CardContent className="p-10">
-                <div onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-sm font-bold uppercase tracking-wide">Name</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                      placeholder="Your name"
-                      className="h-12 transition-all focus:scale-[1.02] border-2 focus:border-foreground"
-                    />
-                  </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
 
                   {/* Email */}
                   <div className="space-y-2">
@@ -233,15 +229,15 @@ export function ContactSection() {
                     />
                   </div>
 
-                  {/* Subject */}
+                  {/* Phone Number */}
                   <div className="space-y-2">
-                    <Label htmlFor="subject" className="text-sm font-bold uppercase tracking-wide">Subject</Label>
+                    <Label htmlFor="phone_number" className="text-sm font-bold uppercase tracking-wide">Phone Number</Label>
                     <Input
-                      id="subject"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      id="phone_number"
+                      value={formData.phone_number}
+                      onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
                       required
-                      placeholder="How can we help?"
+                      placeholder="+1 234 567 890"
                       className="h-12 transition-all focus:scale-[1.02] border-2 focus:border-foreground"
                     />
                   </div>
@@ -277,8 +273,7 @@ export function ContactSection() {
 
                   {/* Submit Button */}
                   <Button
-                    type="button"
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={isSubmitting}
                     className="w-full bg-foreground text-background hover:bg-foreground/90 group relative overflow-hidden h-14 text-base font-bold shadow-lg hover:shadow-2xl transition-all hover:scale-[1.02]"
                   >
@@ -297,7 +292,7 @@ export function ContactSection() {
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                   </Button>
-                </div>
+                </form>
               </CardContent>
             </Card>
           </div>

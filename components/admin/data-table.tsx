@@ -6,12 +6,14 @@ import { Pencil, Trash2 } from "lucide-react"
 
 interface DataTableProps {
   data: any[]
-  columns: { key: string; label: string }[]
-  onEdit: (item: any) => void
-  onDelete: (id: string) => void
+  columns: { key: string; label: string; type?: string }[]
+  onEdit?: (item: any) => void
+  onDelete?: (id: string) => void
 }
 
 export function DataTable({ data, columns, onEdit, onDelete }: DataTableProps) {
+  const hasActions = Boolean(onEdit || onDelete)
+
   if (data.length === 0) {
     return (
       <Card className="bg-card border-border">
@@ -32,7 +34,7 @@ export function DataTable({ data, columns, onEdit, onDelete }: DataTableProps) {
                     {column.label}
                   </th>
                 ))}
-                <th className="text-right p-4 font-semibold text-sm">Actions</th>
+                {hasActions && <th className="text-right p-4 font-semibold text-sm">Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -40,28 +42,34 @@ export function DataTable({ data, columns, onEdit, onDelete }: DataTableProps) {
                 <tr key={item._id || index} className="border-b border-border last:border-0 hover:bg-muted/50">
                   {columns.map((column) => (
                     <td key={column.key} className="p-4 text-sm">
-                      {column.key === "from" || column.key === "to"
+                      {column.type === "date"
                         ? item[column.key]
                           ? new Date(item[column.key]).toLocaleDateString()
                           : "N/A"
                         : item[column.key] || "N/A"}
                     </td>
                   ))}
-                  <td className="p-4 text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button size="sm" variant="outline" onClick={() => onEdit(item)}>
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="text-destructive hover:text-destructive bg-transparent"
-                        onClick={() => onDelete(item._id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </td>
+                  {hasActions && (
+                    <td className="p-4 text-right">
+                      <div className="flex justify-end gap-2">
+                        {onEdit && (
+                          <Button size="sm" variant="outline" onClick={() => onEdit(item)}>
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                        )}
+                        {onDelete && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-destructive hover:text-destructive bg-transparent"
+                            onClick={() => onDelete(item._id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
